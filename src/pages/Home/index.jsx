@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export default function Home() {
     return (
         <div className="flex h-screen items-center justify-center flex-col hero gap-4">
-            <h1 className="text-6xl text-white font-bold text-center">
+            <h1 className="text-3xl md:text-6xl text-white font-bold text-center">
                 Receive <span className="text-green-400">Anonymous Messages</span>     from <br />Anyone, Anytime, Anywhere
                 
             </h1>
