@@ -1,6 +1,29 @@
 import {Link} from "react-router-dom"
+import { useState } from "react"
 
+// import { handleChange } from ".../utilities/handleChange"
 export default function Login() {
+
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        showPassword: false,
+    })
+    // const [showPassword, setShowPassword] = useState(false)
+
+    function handleChange(event) {
+        const {value, name, type, checked} = event.target
+
+        setFormData( (prev) => {
+
+            return ({
+                ...prev,
+                [name]: type=="checkbox" ? checked: value,
+            })
+        })
+
+        console.log(formData)
+    }
 
     return (
        <form
@@ -15,19 +38,19 @@ export default function Login() {
         <div className="space-y-4 mt-4">
             
                 <div class="relative">
-                    <input type="text" id="username" class="floating-input peer" name="username" placeholder=" " />
+                    <input type="text" id="username" class="floating-input peer" name="username" value={formData.username} onChange={handleChange} placeholder=" " />
                     <label for="username" class="floating-label">Username</label>
                 </div>
             
                 <div class="relative">
-                    <input type="password" id="password" class="floating-input peer" placeholder=" " />
+                    <input type={formData.showPassword ? "text": "password"} name="password" id="password" class="floating-input peer" value={formData.password} onChange={handleChange} placeholder=" " />
                     <label for="password" class="floating-label">Password</label>
                 </div>
         
         </div>
 
         <div className="mt-4">
-            <input type="checkbox" name="showPassword" id="showpassword" />
+            <input type="checkbox" name="showPassword" id="showpassword" onChange={handleChange}/>
             <label htmlFor="showpassword" className="ml-2">Show Password</label>
         </div>
 
