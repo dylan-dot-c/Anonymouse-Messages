@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom"
 
 import Home from "./pages/Home/index"
 import Login from "./pages/Login/index"
@@ -17,7 +17,7 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (      
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -28,7 +28,7 @@ function App() {
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
     <Footer />
-    </BrowserRouter>
+    </HashRouter>
   )
 
 }
