@@ -1,8 +1,12 @@
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { useState } from "react"
+import axios from "axios"
+import {toast} from "react-toastify"
 
 // import { handleChange } from ".../utilities/handleChange"
 export default function Login() {
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         username: "",
@@ -25,9 +29,29 @@ export default function Login() {
         console.log(formData)
     }
 
+    async function handleSubmit(event) {
+        event.preventDefault()
+
+        try {
+
+           const result = await axios.post("http://127.0.0.1:3000/users/login", formData)
+           console.log(result, result.data.token)
+
+           localStorage.setItem('token', result.data.token)
+           toast.success("Login Successful!")
+           navigate('/dashboard')
+
+        }catch(err) {
+            console.error(err)
+            toast.error("Invalid credentials entered")
+        }
+
+    }
+
     return (
        <form
         className="container mx-auto w-full md:w-[350px] px-4 shadow-lg py-4 text-white/80 mt-20 space-y-4 min-h-screen"
+        onSubmit = {handleSubmit}
        >
 
         <h1 className="text-green-400 text-3xl text-center">

@@ -12,7 +12,7 @@ export default function MessageBox(props) {
             <p>{props.message}</p>
             <span className="absolute bottom-2 left-0 px-4"><MdOutlineContentCopy size={20} className="hover:cursor-pointer text-slate-400 hover:text-green-400" /></span>
 
-            <RelativeDate date={10} />
+            <RelativeDate date={props.date} />
         </div>
     )
 }

@@ -1,15 +1,17 @@
 
-import { useParams} from "react-router-dom"
-import { useState } from "react"
+import { useParams, useNavigate} from "react-router-dom"
+import { useState, useEffect } from "react"
 import {toast} from "react-toastify"
 import {BiMessageCheck} from "react-icons/bi"
+import axios from "axios"
 
 export default function SendMessage() {
-
+    const navigate = useNavigate()
     const { username } = useParams()
 
     const [charCount, setCharCount] = useState(0)
     const [message, setMessage] = useState("")
+    const [userData, setUserData] = useState({})
 
     const conditions = [
         "Please keep messages fun, kind and respectful. We do not tolerate cyberbullying.",
@@ -17,6 +19,26 @@ export default function SendMessage() {
         "Anyone can send an anonymous message, a user doesn't have to be signed in to send a message.",
 
     ]
+
+    useEffect( () => {
+
+        async function verifyName() {
+
+            try {
+                const result = await axios.post("http://127.0.0.1:3000/users/exists", {username})
+                setUserData(result.data)
+                console.log("result is", result.data)
+
+
+            }catch(err) {
+                console.log(err)
+                toast.error("Username dont exist")
+                navigate('/')
+            }
+        }
+        verifyName()
+    }, [])
+
 
     function handleChange(event) {
         const {value} = event.target
@@ -40,6 +62,21 @@ export default function SendMessage() {
     }
     )
 
+    async function handleClick() {
+
+       try {
+        const result = await axios.post("http://127.0.0.1:3000/messages/add", {message: message, user_id: userData.user_id})
+        setMessage("")
+
+        console.log("result is from msg", result)
+        toast.success("Message sent!")
+       }catch(err) {
+            console.error(err)
+       }
+
+
+    }
+
     return (
         <div className="my-20 container mx-auto bg-gray-800 px-6 py-10 max-w-[800px]">
             <h1
@@ -50,17 +87,13 @@ export default function SendMessage() {
 
             <p className={`text-right ${message.length===255 ? "text-red-500": "text-white"}`}>{message.length}/255</p>
 
-            <textarea name="message" id="" cols="30" rows="10" maxLength="255"
+            <textarea name="message" id="" cols="30" rows="10" maxLength="255" value={message}
                 className="text-white px-4 py-4 bg-gray-700 rounded-lg outline-0 resize-none w-full md:w-4/5 mx-auto ring-2 block  ring-green-400"
                 onChange={handleChange}
                 >
 
             </textarea>
-            <button className="text-white px-4 py-3 rounded bg-green-600 shadow-lg block my-4 mx-auto" onClick={() => {toast.success(`Message sent to ${username}`, {
-                theme: "dark",
-                
-                // icon: ({theme, type}) => <BiMessageCheck color="blue" />
-            })}}>
+            <button className="text-white px-4 py-3 rounded bg-green-600 shadow-lg block my-4 mx-auto" onClick={handleClick} >
                 Send Message
             </button>
 

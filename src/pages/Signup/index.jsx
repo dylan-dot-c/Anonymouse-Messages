@@ -1,6 +1,11 @@
 import { useState } from "react"
+import axios from "axios"
+import {toast} from "react-toastify"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
+
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -22,10 +27,35 @@ export default function Login() {
         console.log(formData)
     }
 
+    async function handleSubmit(event) {
+        const {username, email, password} = formData
+        event.preventDefault()
+
+        if(username.length < 6) {
+            toast.error("Username can't be less than 6 chars")
+            return
+        }
+        if(password.length < 6) {
+            toast.error("Password must be at least 6 chars long")
+            return
+        }
+
+        try {
+            const result = await axios.post("http://127.0.0.1:3000/users/add", formData)
+
+            toast.success("Signed up successfully!")
+            navigate('/login')
+
+        }catch(err) {
+            console.error(err)
+        }
+    }
+
 
     return (
        <form
         className="container mx-auto w-full md:w-[350px] px-4 shadow-lg py-4 text-white/80 mt-20 min-h-screen space-y-4"
+        onSubmit={handleSubmit}
        >
 
         <h1 className="text-green-400 text-3xl text-center">
@@ -46,7 +76,7 @@ export default function Login() {
                 </div>
             
                 <div className="relative">
-                    <input type={formData.showPassword ? "text" : "password"} id="password" className="floating-input peer" placeholder=" " onChange={handleChange}/>
+                    <input type={formData.showPassword ? "text" : "password"} id="password" name="password" className="floating-input peer" placeholder=" " onChange={handleChange}/>
                     <label htmlFor="password" className="floating-label">Password</label>
                 </div>
         
