@@ -24,7 +24,7 @@ export default function Login() {
             })
         })
 
-        console.log(formData)
+        // console.log(formData)
     }
 
     async function handleSubmit(event) {
