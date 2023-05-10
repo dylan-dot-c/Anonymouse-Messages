@@ -1,7 +1,9 @@
-export default function Sender({name}) {
+export default function Sender({ name, id, setUserToReplyTo, isUserMessage }) {
     return (
-        <div className='absolute bottom-1 left-0 px-2 text-gray-300'>
-            <p>{name}</p>
+        <div className={`text-xs absolute bottom-1 left-0 px-2 text-${isUserMessage ? "green" : "slate"}-300`}>
+            <button onClick={function () {setUserToReplyTo({ name, id });}}>
+                reply to {name}
+            </button>
         </div>
-    )
+    );
 }

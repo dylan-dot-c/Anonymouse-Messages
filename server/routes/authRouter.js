@@ -3,17 +3,24 @@ import User from '../schemas/userSchema.js'
 import dotenv from "dotenv";
 import mongodb from "../database/mongodb.js";
 
+// I need to handle web tokens
+
 mongodb.connectToDatabase();
 dotenv.config();
 
 const authRouter = express.Router();
 
-authRouter.post("/login", async function (req, res) {
-    const { username, password } = req.body;
+authRouter.post("/login", async function(req, res) {
+    const {
+        username,
+        password
+    } = req.body;
 
     try {
-        
-        const user = await User.findOne({ username });
+
+        const user = await User.findOne({
+            username: username.toLowerCase()
+        });
         if (!user) {
             return res.status(404).send("User not found");
         }
@@ -32,10 +39,16 @@ authRouter.post("/login", async function (req, res) {
 });
 
 
-authRouter.post("/register", async function (req, res) {
-    const { firstName, lastName, username, email , password } = req.body;
+authRouter.post("/register", async function(req, res) {
+    const {
+        firstName,
+        lastName,
+        username,
+        email,
+        password
+    } = req.body;
 
-    try {      
+    try {
         const user = new User({
             firstName,
             lastName,
@@ -45,7 +58,7 @@ authRouter.post("/register", async function (req, res) {
             messages: []
         });
 
-     
+
 
         user.save();
 

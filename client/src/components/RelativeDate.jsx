@@ -1,10 +1,10 @@
 import formatDistance from 'date-fns/formatDistance'
 
-export default function RelativeDate(props) {
-    const result = formatDistance( props.date, Date.now(), {addSuffix: true})
+export default function RelativeDate({date}) {
+    const result = formatDistance( date, Date.now(), {addSuffix: true})
+    
     return (
-        <div className='absolute bottom-1 right-0 px-2 text-gray-300'>
-            {/* <p>{props.date}</p> */}
+        <div className=' text-xs absolute bottom-1 right-0 px-2 text-gray-300'>
             <p>{result}</p>
         </div>
     )

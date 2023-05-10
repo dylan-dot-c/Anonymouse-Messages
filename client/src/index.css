@@ -13,6 +13,8 @@
 
 @layer base {
 
+  
+
   body {
     background-color: #242424;
     @apply bg-gray-900;

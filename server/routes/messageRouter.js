@@ -1,31 +1,27 @@
-//Libraries
 import express from 'express'
-
-//Schemas
 import User    from '../schemas/userSchema.js';
 import Message from '../schemas/messageSchema.js'
-
-// Routers
 const messageRouter = express.Router();
 
-// POST
 
-messageRouter.post("/", async function(request,response){
-    const {content,sender} = request.body;
-    const message  = new User({content,sender});
-    console.log(message)
-    message.save();
-})
 
 messageRouter.post("/:username",async function(request,response){
-    
-    const {username}              = request.params;
-    const {content , sender}      = request.body;
 
-    const message = new Message({content , sender});
+    const {username}                                                   = request.params;
+    const {content , sender , senderId , recipient , recipientId}      = request.body;
 
-    message.save();
-    
+    let message = null;
+
+    console.log(recipient,recipientId)
+    try{
+        message = new Message({content , sender , senderId , recipient , recipientId});
+        message.save();
+    }
+    catch(error){
+        response.status(401).json({s : 401});
+        return;
+    }
+
     try {
         await User.findOneAndUpdate(
           { username },
@@ -33,30 +29,25 @@ messageRouter.post("/:username",async function(request,response){
           { new: true }
         );
 
-
         const user = await User.findOne({username: username.toLowerCase()})
     
-        response.json(user);
+        if(!user){
+           
+            response.status(404).json({s:404});
+        }
+        else{
+            response.status(201).json(user);
+        }
+
       } catch (error) {
-        console.error(error);
-        response.status(500);
-      }
+        console.log(error)
+    
+        response.status(500).json({s:500});
+      
+    }
 
 })
 
-
-
-// GET 
-messageRouter.get("/" , async function(request,response){
-    try {
-        const messages = await User.find();    
-
-    } catch (error) {
-        response.send("Something went wrong while fetching messages. Implement error handling");
-    }
-});
-
-// gets the messages for a particular user
 messageRouter.get("/:username" , async function(request,response){
     const {username} = request.params;
 
