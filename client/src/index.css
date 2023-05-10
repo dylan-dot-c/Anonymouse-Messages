@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+@font-face {
+  font-family: "Sigmar";
+  src: url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  
+
+  body {
+    background-color: #242424;
+    @apply bg-gray-900;
+  }
+
+  * {
+    font-family: "Righteous";
+  }
+
+  label {
+    @apply text-green-400 mb-2 font-semibold block;
+  }
+
+  input {
+
+  }
+
+  h1 span {
+    background-image: url(/vite.svg);
+  }
+
+
+  .talk-bubble {
+    /* margin: 40px; */
+    display: inline-block;
+    position: relative;
+    /* width: 200px; */
+    height: auto;
+    background-color: lightyellow;
+    padding: 10px;
+    border-radius: 20px;
+    
+  }
+
+  .talk-bubble p {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important ;
+  }
+  .border{
+    /* border: 8px solid #666; */
+  }
+
+  /* .tri-right.left-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -40px;
+    right: auto; */
+    /* top: 100%; */
+    /* bottom: 0;
+    border: 32px solid;
+    border-color: #123 transparent transparent transparent;
+  } */
+  .tri-right.left-top:after{
+    content: ' ';
+    position: absolute;
+    
+  }
+
+  .Toastify__toast-theme--dark {
+
+    @apply bg-red-800;
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    /* left: -40px;
+    right: auto;
+    top: auto;
+    bottom: 30px; */
+    border: 22px solid;
+    border-color: transparent  rgb(71,85,105) transparent transparent;
+  }
+
+  .hero {
+    background-image: url(/endless2.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .floating-input {
+    @apply block px-2.5 pb-2.5 pt-4 w-full text-sm text-green-400 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600;
+  }
+
+  .floating-label {
+    @apply absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1;
+  }
+
+  .floating-label {
+
+  }
+
+  input[type="checkbox"] {
+    @apply accent-green-400 inline;
+  }
+
+  input[type="checkbox"] + label {
+    @apply inline;
+  }
+}
